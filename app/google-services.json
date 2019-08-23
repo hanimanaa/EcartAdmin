@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "941674715948",
+    "firebase_url": "https://ecart-a88b4.firebaseio.com",
+    "project_id": "ecart-a88b4",
+    "storage_bucket": "ecart-a88b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941674715948:android:801564317ef6938a",
+        "android_client_info": {
+          "package_name": "com.dimatechs.ecart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941674715948-0nvacf5cjou7bqkf7k46sif507ehpc8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAwF_tNPvPVqG-gO2qByUjxGSwdRNxjqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941674715948-0nvacf5cjou7bqkf7k46sif507ehpc8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
