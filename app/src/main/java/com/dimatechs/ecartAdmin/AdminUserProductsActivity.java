@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Model.AdminOrders;
-import com.dimatechs.ecart.Model.Cart;
-import com.dimatechs.ecart.ViewHolder.CartViewHolder;
+import com.dimatechs.ecartAdmin.Model.AdminOrders;
+import com.dimatechs.ecartAdmin.Model.Cart;
+import com.dimatechs.ecartAdmin.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -44,9 +44,6 @@ public class AdminUserProductsActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         productsList.setLayoutManager(layoutManager);
 
-
-
-
         cartListRef = FirebaseDatabase.getInstance().getReference()
                 .child("Cart List")
                 .child("Admin View")
@@ -74,8 +71,6 @@ public class AdminUserProductsActivity extends AppCompatActivity {
 
             }
         });
-
-        Toast.makeText(this, phonex, Toast.LENGTH_SHORT).show();
 
         FirebaseRecyclerOptions<Cart> options=
                 new FirebaseRecyclerOptions.Builder<Cart>()

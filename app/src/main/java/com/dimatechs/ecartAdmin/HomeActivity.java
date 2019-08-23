@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,9 +18,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Model.Products;
-import com.dimatechs.ecart.Prevalent.Prevalent;
-import com.dimatechs.ecart.ViewHolder.ProductViewHolder;
+import com.dimatechs.ecartAdmin.Model.Products;
+import com.dimatechs.ecartAdmin.Prevalent.Prevalent;
+import com.dimatechs.ecartAdmin.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,10 +45,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Log.d("hani", "onCreate");
-
-     //   RegisterAccountBtn = (Button) findViewById(R.id.button1);
-      //  RegisterAccountBtn.setOnClickListener(this);
 
         Paper.init(this);
 
@@ -71,16 +67,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if (view==btn){
-            Toast.makeText(HomeActivity.this, "סל קניות", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AdminNewOrdersActivity.class);
             startActivity(intent);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("hani", "onCreateOptionsMenu");
-
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
@@ -88,13 +81,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart()
     {
-        Log.d("hani", "onStart");
-
         super.onStart();
         FirebaseRecyclerOptions<Products> options=
                 new FirebaseRecyclerOptions.Builder<Products>()
-                .setQuery(ProductsRef,Products.class)
-                .build();
+                        .setQuery(ProductsRef,Products.class)
+                        .build();
 
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter=
@@ -137,12 +128,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                                             }
                                                         }
                                                     });
-
                                         }
                                     }
                                 });
                                 builder.show();
-
                             }
                         });
                     }
@@ -150,8 +139,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
                     {
-                        Log.d("hani", "onCreateViewHolder");
-
                         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.product_items_layout,parent,false);
                         ProductViewHolder holder = new ProductViewHolder(view);
                         return holder;
@@ -169,47 +156,34 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_Register) {
-            Toast.makeText(this,"you selected הרשמה",Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
             return true;
         }
 
         else if (id == R.id.action_Admin) {
-                Toast.makeText(this,"you selected מנהל",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(),NewProductActivity.class);
-                startActivity(intent);
-                return true;
-
-
+            Intent intent = new Intent(getApplicationContext(),NewProductActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         else if (id == R.id.action_Orders) {
-            Toast.makeText(this,"הזמנות",Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(),AdminNewOrdersActivity.class);
             startActivity(intent);
             return true;
-
-
         }
 
         else if (id == R.id.action_Exit) {
-            Toast.makeText(this,"you selected יציאה",Toast.LENGTH_LONG).show();
-         //   android.os.Process.killProcess(android.os.Process.myPid());
-           // System.exit(1);
-           // Paper.book().destroy();
-
+            Toast.makeText(this,"יציאה",Toast.LENGTH_LONG).show();
+            //   android.os.Process.killProcess(android.os.Process.myPid());
+            // System.exit(1);
+            // Paper.book().destroy();
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-
-
-
             return true;
         }
         return true;
     }
 }
-
-

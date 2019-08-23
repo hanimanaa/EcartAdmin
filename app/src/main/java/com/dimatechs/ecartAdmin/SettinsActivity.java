@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Prevalent.Prevalent;
+import com.dimatechs.ecartAdmin.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,7 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-;
 
 public class SettinsActivity extends AppCompatActivity {
     private EditText bisinessEditText, fnameEditText, lnameEditText, cityEditText, passswordEditText;
@@ -41,14 +40,12 @@ public class SettinsActivity extends AppCompatActivity {
 
         userInfoDisplay(bisinessEditText, fnameEditText, lnameEditText, cityEditText, passswordEditText);
 
-
         closeTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
 
         saveTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +107,6 @@ public class SettinsActivity extends AppCompatActivity {
                             String lname = dataSnapshot.child("lname").getValue().toString();
                             String city = dataSnapshot.child("city").getValue().toString();
                             String password = dataSnapshot.child("password").getValue().toString();
-
 
                             bisinessEditText.setText(bisiness);
                             fnameEditText.setText(fname);

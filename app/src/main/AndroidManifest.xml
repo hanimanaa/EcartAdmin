@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dimatechs.ecart">
+    package="com.dimatechs.ecartAdmin">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -14,25 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".ProuctUpdateActivity"></activity>
-        <activity android:name=".AdminUserProductsActivity" />
-        <activity android:name=".AdminNewOrdersActivity" />
-        <activity android:name=".ConfirmFinalOrderActivity" />
-        <activity android:name=".CartActivity" />
-        <activity android:name=".SettinsActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ProductDetailsActivity" />
-        <activity android:name=".NewProductActivity" />
-        <activity android:name=".ShopCardActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.AdminUserProductsActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.AdminNewOrdersActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.ConfirmFinalOrderActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.CartActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.HomeActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.SettinsActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.LoginActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.ProductDetailsActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.NewProductActivity" />
+        <activity android:name="com.dimatechs.ecartAdmin.RegisterActivity" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.dimatechs.ecartAdmin.SplashScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

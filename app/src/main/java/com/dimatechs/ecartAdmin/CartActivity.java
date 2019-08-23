@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Model.Cart;
-import com.dimatechs.ecart.Prevalent.Prevalent;
-import com.dimatechs.ecart.ViewHolder.CartViewHolder;
+import com.dimatechs.ecartAdmin.Model.Cart;
+import com.dimatechs.ecartAdmin.Prevalent.Prevalent;
+import com.dimatechs.ecartAdmin.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -112,7 +112,6 @@ public class CartActivity extends AppCompatActivity
     private void loadProducts()
     {
         final DatabaseReference CartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
-        Log.d("cart", "onStart");
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(CartListRef.child("User View")
@@ -126,7 +125,6 @@ public class CartActivity extends AppCompatActivity
 
                     @Override
                     protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
-                        Log.d("cart", "onBindViewHolder");
                         holder.txtProductName.setText(model.getName());
                         holder.txtProductPrice.setText(" מחיר : " + model.getPrice() + " ש\"ח ");
                         holder.txtProductQuantity.setText(" כמות : " + model.getQuantity());
@@ -198,8 +196,6 @@ public class CartActivity extends AppCompatActivity
                     @NonNull
                     @Override
                     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        Log.d("cart", "onCreateViewHolder");
-
                         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout, parent, false);
                         CartViewHolder holder = new CartViewHolder(view);
                         return holder;
@@ -215,8 +211,6 @@ public class CartActivity extends AppCompatActivity
     {
         super.onStart();
         check();
-
-
     }
 
 }

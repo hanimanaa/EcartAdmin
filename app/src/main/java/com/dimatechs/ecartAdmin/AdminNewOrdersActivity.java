@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Model.AdminOrders;
+import com.dimatechs.ecartAdmin.Model.AdminOrders;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +31,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
     private DatabaseReference ordersRef,usersref;
-    private String phone= "han";
+    private String phone= "";
 
 
     @Override
@@ -106,8 +106,6 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                             {
                                 String orderNum = getRef(position).getKey();
                                 String x=getRef(position).child(phone).getKey();
-                                Toast.makeText(AdminNewOrdersActivity.this, x, Toast.LENGTH_SHORT).show();
-
                                 Intent intent = new Intent(AdminNewOrdersActivity.this,AdminUserProductsActivity.class);
                                 intent.putExtra("orderNum",orderNum);
                                 startActivity(intent);
@@ -121,8 +119,6 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                     @Override
                     public AdminOrdersViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
                     {
-                        Log.d("aaaa","onCreateViewHolder");
-
                         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.orders_layout,parent,false);
                         AdminOrdersViewHolder holder = new AdminOrdersViewHolder(view);
                         return holder;
@@ -152,17 +148,10 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(AdminNewOrdersActivity.this, "onClick after "+phone, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AdminNewOrdersActivity.this,AdminUserProductsActivity.class);
         intent.putExtra("orderNum",orderNum);
         startActivity(intent);
     }
-
-
-
-
-
-
 
     public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder
     {
@@ -178,10 +167,6 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
             userDateTime = (TextView) itemView.findViewById(R.id.order_date_time);
             userAdress = (TextView) itemView.findViewById(R.id.order_address_city);
             showOrdersBtn = (Button) itemView.findViewById(R.id.show_all_products_btn);
-
-
-
-
         }
     }
 }

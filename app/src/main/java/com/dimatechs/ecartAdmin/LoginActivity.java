@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,9 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Model.Admin;
-import com.dimatechs.ecart.Model.Users;
-import com.dimatechs.ecart.Prevalent.Prevalent;
+import com.dimatechs.ecartAdmin.Model.Admin;
+import com.dimatechs.ecartAdmin.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                 InputNumber.setText(UserPhoneKey);
                 InputPassword.setText(UserPasswordKey);
                 chkBoxRememberMe.setChecked(true);
-
             }
 
         }
@@ -65,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
                     LoginUser();
                 }
             });
-
     }
 
     private void LoginUser()
@@ -83,13 +80,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-
             AllowAccessToAccount(phone, password);
             loadingBar.setTitle("כניסת מנהל");
             loadingBar.setMessage("המתן בבקשה");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
-
         }
     }
 
@@ -137,8 +132,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "מס טלפון לא רשום", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                     Toast.makeText(LoginActivity.this, "צור קשר עם פאדי כיואן טלפון 0508128670", Toast.LENGTH_LONG).show();
-
-
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,14 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.dimatechs.ecart.Model.Products;
+import com.dimatechs.ecartAdmin.Model.Products;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -102,15 +101,12 @@ public class NewProductActivity extends AppCompatActivity {
                 if(dataSnapshot.exists())
                 {
                     Products products=dataSnapshot.getValue(Products.class);
-
                     EDProductName.setText(products.getName());
                     EdProductPrice.setText(products.getPrice());
                     EDProuctDescription.setText(products.getDescription());
                     Picasso.get().load(products.getImage()).into(ProductImage);
                     oldImageUri= Uri.parse(products.getImage());
-
                 }
-
             }
 
             @Override
@@ -136,7 +132,6 @@ public class NewProductActivity extends AppCompatActivity {
             ImageUri=data.getData();
             ProductImage.setImageURI(ImageUri);
         }
-
     }
 
     private void ValidateProductData() {
@@ -189,12 +184,12 @@ public class NewProductActivity extends AppCompatActivity {
 
             if(ImageUri !=null && ImageUri.toString() != oldImageUri.toString() )
             {
-                Toast.makeText(this, "new image", Toast.LENGTH_SHORT).show();
+                //new image
                 UplaodImage(ImageUri);
             }
             else
             {
-                Toast.makeText(this, "same image", Toast.LENGTH_SHORT).show();
+                //same image
                 downloadImageURL=oldImageUri.toString();
                 loadingBar.dismiss();
                 SaveProductInfoToDatabase();
@@ -203,7 +198,7 @@ public class NewProductActivity extends AppCompatActivity {
 
         }
         else
-        { // new
+        { // new product
             productRandomKey = saveCurrentDate + saveCurrentTime;
             UplaodImage(ImageUri);
         }
@@ -214,7 +209,6 @@ public class NewProductActivity extends AppCompatActivity {
     private void UplaodImage(Uri ImageUri)
     {
         final StorageReference filePath=ProductImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey +".jpg");
-
         final UploadTask uploadTask = filePath.putFile(ImageUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -269,8 +263,6 @@ public class NewProductActivity extends AppCompatActivity {
         productMap.put("description",ProuctDescription);
         productMap.put("price",ProductPrice);
         productMap.put("image",downloadImageURL);
-
-
 
         ProductsRef.child(productRandomKey).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

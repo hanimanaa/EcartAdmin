@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.dimatechs.ecart.Model.Products;
-import com.dimatechs.ecart.Prevalent.Prevalent;
+import com.dimatechs.ecartAdmin.Model.Products;
+import com.dimatechs.ecartAdmin.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -76,12 +76,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         {
                             if(dataSnapshot.exists())
                             {
+                                //new order num
                                 maxid = (dataSnapshot.getValue().toString());
                                 Paper.book().write(Prevalent.UserOrderKey, maxid);
                                 int x=Integer.parseInt(maxid)+1;
                                 orderListRef.setValue(x);
-                                Toast.makeText(ProductDetailsActivity.this, "new order num", Toast.LENGTH_SHORT).show();
-
                             }
 
                         }
@@ -94,8 +93,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    //same order num
                     maxid=Paper.book().read(Prevalent.UserOrderKey);
-                    Toast.makeText(ProductDetailsActivity.this, "ex", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -112,7 +111,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 addingToCartList();
-
             }
         });
 
@@ -161,7 +159,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-
                                                 Toast.makeText(ProductDetailsActivity.this, "הוסף לסל - המשך בקניה", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
                                                 startActivity(intent);
@@ -192,7 +189,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     PPrice=products.getPrice();
                     productDescription.setText(products.getDescription());
                     Picasso.get().load(products.getImage()).into(productImage);
-
                 }
 
             }

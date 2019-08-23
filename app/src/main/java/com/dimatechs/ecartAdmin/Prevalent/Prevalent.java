@@ -1,7 +1,6 @@
-package com.dimatechs.ecart.Prevalent;
+package com.dimatechs.ecartAdmin.Prevalent;
 
-import com.dimatechs.ecart.Model.Admin;
-import com.dimatechs.ecart.Model.Users;
+import com.dimatechs.ecartAdmin.Model.Admin;
 
 public class Prevalent
 {

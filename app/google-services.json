@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941674715948:android:729884a222794cc1",
+        "android_client_info": {
+          "package_name": "com.dimatechs.ecartAdmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941674715948-0nvacf5cjou7bqkf7k46sif507ehpc8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAwF_tNPvPVqG-gO2qByUjxGSwdRNxjqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941674715948-0nvacf5cjou7bqkf7k46sif507ehpc8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

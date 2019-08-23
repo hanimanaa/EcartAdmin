@@ -1,35 +1,17 @@
-package com.dimatechs.ecart.Model;
+package com.dimatechs.ecartAdmin.Model;
 
-public class Users
+public class Admin
 {
-    private String bisiness,city,fname,lname,phone,password;
+    private String fname,lname,phone,password;
 
-    public Users() {
-    }
-
-    public Users(String bisiness, String city, String fname, String lname, String phone, String password) {
-        this.bisiness = bisiness;
-        this.city = city;
+    public Admin(String fname, String lname, String phone, String password) {
         this.fname = fname;
         this.lname = lname;
         this.phone = phone;
         this.password = password;
     }
 
-    public String getBisiness() {
-        return bisiness;
-    }
-
-    public void setBisiness(String bisiness) {
-        this.bisiness = bisiness;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public Admin() {
     }
 
     public String getFname() {

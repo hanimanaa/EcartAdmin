@@ -1,4 +1,4 @@
-package com.dimatechs.ecart;
+package com.dimatechs.ecartAdmin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -92,10 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
             loadingBar.show();
             
             ValidatePhoneNumber(phone,bisiness,fname,lname,city,password);
-
         }
-
-
     }
 
     private void ValidatePhoneNumber(final String phone,final String bisiness,final String fname,final String lname,final String city,final String password)
@@ -125,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 {
                                     if(task.isSuccessful())
                                     {
-                                        Toast.makeText(RegisterActivity.this, "חשבון נרשם בהצלחה", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, "לקוח נרשם בהצלחה", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
                                         Intent intent=new Intent(RegisterActivity.this,HomeActivity.class);
                                         startActivity(intent);
@@ -134,7 +131,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     {
                                         Toast.makeText(RegisterActivity.this, "שגיאת רשת", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
-
                                     }
                                 }
                             });
@@ -145,7 +141,6 @@ public class RegisterActivity extends AppCompatActivity {
                     loadingBar.dismiss();
                     Intent intent=new Intent(RegisterActivity.this,HomeActivity.class);
                     startActivity(intent);
-
                 }
             }
 

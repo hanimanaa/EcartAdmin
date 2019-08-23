@@ -1,11 +1,11 @@
-package com.dimatechs.ecart.ViewHolder;
+package com.dimatechs.ecartAdmin.ViewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.dimatechs.ecart.Interface.ItemClickListner;
-import com.dimatechs.ecart.R;
+import com.dimatechs.ecartAdmin.Interface.ItemClickListner;
+import com.dimatechs.ecartAdmin.R;
 
 public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {

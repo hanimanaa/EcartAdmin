@@ -1,4 +1,4 @@
-package com.dimatechs.ecart.Model;
+package com.dimatechs.ecartAdmin.Model;
 
 public class Products
 {
