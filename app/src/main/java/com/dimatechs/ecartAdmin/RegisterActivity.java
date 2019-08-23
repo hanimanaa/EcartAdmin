@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(RegisterActivity.this, "מס טלפון רשום", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "מס טלפון רשום !!", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                     Intent intent=new Intent(RegisterActivity.this,HomeActivity.class);
                     startActivity(intent);
