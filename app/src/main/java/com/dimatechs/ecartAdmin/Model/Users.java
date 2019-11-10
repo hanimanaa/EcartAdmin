@@ -3,6 +3,7 @@ package com.dimatechs.ecartAdmin.Model;
 public class Users
 {
     private String bisiness,city,fname,lname,phone,password;
+    private boolean active;
 
     public Users() {
     }
@@ -14,6 +15,7 @@ public class Users
         this.lname = lname;
         this.phone = phone;
         this.password = password;
+        this.active=true;
     }
 
     public String getBisiness() {
@@ -62,5 +64,13 @@ public class Users
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

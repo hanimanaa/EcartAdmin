@@ -14,18 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name="com.dimatechs.ecartAdmin.AdminUserProductsActivity" />
-        <activity android:name="com.dimatechs.ecartAdmin.AdminNewOrdersActivity" />
-        <activity android:name="com.dimatechs.ecartAdmin.HomeActivity" />
-        <activity android:name="com.dimatechs.ecartAdmin.LoginActivity" />
-        <activity android:name="com.dimatechs.ecartAdmin.NewProductActivity" />
-        <activity android:name="com.dimatechs.ecartAdmin.RegisterActivity" />
+        <activity android:name=".CustomersActivity"></activity>
+        <activity android:name=".AdminUserProductsActivity" />
+        <activity android:name=".AdminNewOrdersActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".NewProductActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity
-            android:name="com.dimatechs.ecartAdmin.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

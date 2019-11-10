@@ -173,6 +173,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
 
+        else if (id == R.id.action_Customers) {
+            Intent intent = new Intent(getApplicationContext(),CustomersActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         else if (id == R.id.action_Exit) {
             Toast.makeText(this,"יציאה",Toast.LENGTH_LONG).show();
             //   android.os.Process.killProcess(android.os.Process.myPid());
