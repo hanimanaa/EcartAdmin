@@ -71,11 +71,10 @@ public class CustomersActivity extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull CustomersViewHolder holder, int position, @NonNull final Users model)
                     {
-                        holder.txtcustomer_bisiness.setText(model.getBisiness());
-                        holder.txtcustomer_city.setText(model.getCity());
-                        holder.txtcustomer_lname.setText(model.getLname());
-                        holder.txtcustomer_fname.setText(model.getFname());
-                        holder.txtcustomer_phone.setText(model.getPhone());
+                        holder.txtcustomer_bisiness.setText("שם עסק : "+ model.getBisiness());
+                        holder.txtcustomer_city.setText("עיר : "+ model.getCity());
+                        holder.txtcustomer_name.setText("איש קשר : "+ model.getFname() + " "+model.getLname());
+                        holder.txtcustomer_phone.setText("טלפון : "+ model.getPhone());
                     }
                     @NonNull
                     @Override

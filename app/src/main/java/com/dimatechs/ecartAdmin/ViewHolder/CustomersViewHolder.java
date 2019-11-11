@@ -9,7 +9,7 @@ import com.dimatechs.ecartAdmin.R;
 
 public class CustomersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
-    public TextView txtcustomer_bisiness,txtcustomer_city,txtcustomer_lname,txtcustomer_fname,txtcustomer_phone;
+    public TextView txtcustomer_bisiness,txtcustomer_city,txtcustomer_name,txtcustomer_phone;
     public ItemClickListner itemClickListner;
 
     public CustomersViewHolder(View itemView)
@@ -18,8 +18,7 @@ public class CustomersViewHolder extends RecyclerView.ViewHolder implements View
 
         txtcustomer_bisiness = (TextView) itemView.findViewById(R.id.customer_bisiness);
         txtcustomer_city = (TextView) itemView.findViewById(R.id.customer_city);
-        txtcustomer_lname= (TextView) itemView.findViewById(R.id.customer_lname);
-        txtcustomer_fname= (TextView) itemView.findViewById(R.id.customer_fname);
+        txtcustomer_name= (TextView) itemView.findViewById(R.id.customer_name);
         txtcustomer_phone= (TextView) itemView.findViewById(R.id.customer_phone);
 
     }

@@ -37,29 +37,18 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/customer_bisiness"/>
 
+
         <TextView
-            android:id="@+id/customer_lname"
+            android:id="@+id/customer_name"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="שם משפחה"
-            android:textColor="@android:color/white"
-            android:textSize="14dp"
-            android:gravity="right"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/customer_city"/>
-        <TextView
-            android:id="@+id/customer_fname"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="שם פרטי"
+            android:text="שם פרטי ושם משפחה"
             android:textColor="@android:color/white"
             android:textSize="14dp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:textAlignment="viewEnd"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
             android:layout_below="@+id/customer_city"/>
 
         <TextView
@@ -73,10 +62,7 @@
             android:layout_marginLeft="5dp"
            android:gravity="right"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:layout_below="@+id/customer_fname"/>
-
-
+            android:layout_below="@+id/customer_name"/>
 
 
 
