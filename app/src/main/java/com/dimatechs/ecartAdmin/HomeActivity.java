@@ -100,8 +100,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 String selectedCategory = spinner2.getSelectedItem().toString();
-                Toast.makeText(HomeActivity.this, selectedCategory, Toast.LENGTH_SHORT).show();
-                // selectedCategory="משקה חם";
                 if(selectedCategory.equals("הצג הכל"))
                 {
                     Query query = ProductsRef;
