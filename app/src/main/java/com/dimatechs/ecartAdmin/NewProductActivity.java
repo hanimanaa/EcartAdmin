@@ -8,10 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
 
 import com.dimatechs.ecartAdmin.Model.Products;
 import com.google.android.gms.tasks.Continuation;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,8 +34,10 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -40,12 +46,13 @@ public class NewProductActivity extends AppCompatActivity {
     private ImageView ProductImage;
     private static final int GalleryPick=1;
     private Uri ImageUri,oldImageUri;
-    private String ProductName ,ProuctDescription,ProductPrice,saveCurrentDate,saveCurrentTime;
+    private String ProductName ,ProuctDescription,ProductPrice,saveCurrentDate,saveCurrentTime,category;
     private String productRandomKey,downloadImageURL;
     private StorageReference ProductImagesRef;
-    private DatabaseReference ProductsRef;
+    private DatabaseReference ProductsRef,CategoryRef;
     private ProgressDialog loadingBar;
     private String productID="";
+    private Spinner spinner1;
 
 
     @Override
@@ -58,8 +65,11 @@ public class NewProductActivity extends AppCompatActivity {
 
         ProductImagesRef= FirebaseStorage.getInstance().getReference().child("Product Images");
         ProductsRef=FirebaseDatabase.getInstance().getReference().child("Products");
+        CategoryRef=FirebaseDatabase.getInstance().getReference().child("Category");
+
 
         loadingBar=new ProgressDialog(this);
+        spinner1=(Spinner) findViewById(R.id.spinner1);
         AddNewProductBtn=(Button)findViewById(R.id.Btn_new_product);
         EDProductName=(EditText) findViewById(R.id.Ed_Product_name);
         EDProuctDescription=(EditText) findViewById(R.id.Ed_Product_Description);
@@ -79,14 +89,35 @@ public class NewProductActivity extends AppCompatActivity {
                 ValidateProductData();
             }
         });
+
+        //fill spinner
+        Query query = CategoryRef.orderByChild("catName");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<String> catList = new ArrayList<String>();
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    String catName =dataSnapshot1.child("catName").getValue(String.class);
+                    catList.add(catName);
+                }
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(NewProductActivity.this,android.R.layout.simple_spinner_item,catList);
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner1.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(NewProductActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
-            super.onStart();
-            if(productID!=null) {
-                getProductDetails(productID);
-            }
+        super.onStart();
+        if(productID!=null) {
+            getProductDetails(productID);
+        }
 
     }
 
@@ -106,6 +137,7 @@ public class NewProductActivity extends AppCompatActivity {
                     EDProuctDescription.setText(products.getDescription());
                     Picasso.get().load(products.getImage()).into(ProductImage);
                     oldImageUri= Uri.parse(products.getImage());
+
                 }
             }
 
@@ -155,7 +187,7 @@ public class NewProductActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "חסר מחיר למוצר . . .", Toast.LENGTH_SHORT).show();
         }
-        else 
+        else
         {
             StoreProductInformation();
         }
@@ -177,6 +209,8 @@ public class NewProductActivity extends AppCompatActivity {
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime=currentTime.format(calendar.getTime());
+
+        category = spinner1.getSelectedItem().toString();
 
         if(productID !=null)
         { //update
@@ -251,7 +285,7 @@ public class NewProductActivity extends AppCompatActivity {
         });
 
 
-}
+    }
 
     private void SaveProductInfoToDatabase()
     {
@@ -263,6 +297,7 @@ public class NewProductActivity extends AppCompatActivity {
         productMap.put("description",ProuctDescription);
         productMap.put("price",ProductPrice);
         productMap.put("image",downloadImageURL);
+        productMap.put("category",category);
 
         ProductsRef.child(productRandomKey).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -15,7 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dimatechs.ecartAdmin.Model.Products;
@@ -25,9 +28,16 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.paperdb.Paper;
 
@@ -35,9 +45,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button RegisterAccountBtn;
     private FloatingActionButton btn;
-    private DatabaseReference ProductsRef;
+    private DatabaseReference ProductsRef,CategoryRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    private Spinner spinner2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +64,66 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btn.setOnClickListener(this);
 
         ProductsRef= FirebaseDatabase.getInstance().getReference().child("Products");
+        CategoryRef=FirebaseDatabase.getInstance().getReference().child("Category");
 
+        spinner2=(Spinner) findViewById(R.id.spinner2);
         recyclerView=findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        //fill spinner
+        Query query1 = CategoryRef.orderByChild("catName");
+        query1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<String> catList = new ArrayList<String>();
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    String catName =dataSnapshot1.child("catName").getValue(String.class);
+                    catList.add(catName);
+                }
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(HomeActivity.this,android.R.layout.simple_spinner_item,catList);
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner2.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(HomeActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        //filter recyclerView by spinner
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String selectedCategory = spinner2.getSelectedItem().toString();
+                Toast.makeText(HomeActivity.this, selectedCategory, Toast.LENGTH_SHORT).show();
+                // selectedCategory="משקה חם";
+                if(selectedCategory.equals("הצג הכל"))
+                {
+                    Query query = ProductsRef;
+                    fillRecyclerView(query);
+                }
+                else
+                {
+                    Query query = ProductsRef.orderByChild("category").equalTo(selectedCategory);
+                    fillRecyclerView(query);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                fillRecyclerView(ProductsRef);
+            }
+        });
+
+
     }
+
 
     @Override
     public void onClick(View view) {
@@ -82,11 +147,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart()
     {
         super.onStart();
+    }
+
+    private void fillRecyclerView(Query query) {
+
         FirebaseRecyclerOptions<Products> options=
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(ProductsRef,Products.class)
+                        .setQuery(query,Products.class)
                         .build();
-
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter=
                 new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
@@ -146,8 +214,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -175,6 +243,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         else if (id == R.id.action_Customers) {
             Intent intent = new Intent(getApplicationContext(),CustomersActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        else if (id == R.id.action_Category) {
+            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
             startActivity(intent);
             return true;
         }

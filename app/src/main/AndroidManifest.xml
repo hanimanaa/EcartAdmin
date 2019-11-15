@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".CustomersActivity"></activity>
+        <activity android:name=".CategoryActivity"></activity>
+        <activity android:name=".CustomersActivity" />
         <activity android:name=".AdminUserProductsActivity" />
         <activity android:name=".AdminNewOrdersActivity" />
         <activity android:name=".HomeActivity" />
