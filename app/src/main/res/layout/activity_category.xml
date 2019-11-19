@@ -16,7 +16,7 @@
                 android:id="@+id/cat_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="קטיגוריה חדש"
+                android:text="קטגוריה חדש"
                 android:textStyle="italic"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="100dp"
@@ -34,7 +34,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:layout_below="@+id/cat_name"
-                android:src="@drawable/new_user"/>
+                android:src="@drawable/locker"/>
 
             <EditText
                 android:id="@+id/EtCatName"

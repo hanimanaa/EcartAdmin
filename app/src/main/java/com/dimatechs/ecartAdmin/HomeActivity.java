@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -163,6 +164,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         holder.txtProductDescription.setText(model.getDescription());
                         holder.txtProductPrice.setText(" מחיר : " +model.getPrice() + " ש\"ח ");
                         Picasso.get().load(model.getImage()).into(holder.imageView);
+
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override

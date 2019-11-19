@@ -2,6 +2,7 @@ package com.dimatechs.ecartAdmin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,7 +48,7 @@ public class NewProductActivity extends AppCompatActivity {
     private EditText EDProductName,EDProuctDescription,EdProductPrice;
     private ImageView ProductImage;
     private static final int GalleryPick=1;
-    private Uri ImageUri,oldImageUri;
+    private Uri ImageUri,oldImageUri,comImageUri;
     private String ProductName ,ProuctDescription,ProductPrice,saveCurrentDate,saveCurrentTime,category;
     private String productRandomKey,downloadImageURL;
     private StorageReference ProductImagesRef;
@@ -166,6 +169,8 @@ public class NewProductActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void ValidateProductData() {
         ProductName=EDProductName.getText().toString();
         ProuctDescription=EDProuctDescription.getText().toString();
@@ -219,6 +224,7 @@ public class NewProductActivity extends AppCompatActivity {
             if(ImageUri !=null && ImageUri.toString() != oldImageUri.toString() )
             {
                 //new image
+
                 UplaodImage(ImageUri);
             }
             else
@@ -244,6 +250,7 @@ public class NewProductActivity extends AppCompatActivity {
     {
         final StorageReference filePath=ProductImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey +".jpg");
         final UploadTask uploadTask = filePath.putFile(ImageUri);
+
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e)
@@ -323,4 +330,13 @@ public class NewProductActivity extends AppCompatActivity {
                 });
 
     }
+
+    public static byte[] compressBitmap(Bitmap bitmap ,int quality)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,quality,stream);
+        return  stream.toByteArray();
+    }
+
+
 }

@@ -18,7 +18,6 @@
         android:textDirection="rtl"
         android:padding="20dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/Ed_Product_Price"
         android:hint="קטיגוריה"
         android:spinnerMode="dropdown"/>
 
