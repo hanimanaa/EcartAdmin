@@ -33,14 +33,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -56,6 +62,10 @@ public class NewProductActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private String productID="";
     private Spinner spinner1;
+    Bitmap thumb_bitmap=null;
+    byte[] thumb_byte=null;
+    ByteArrayOutputStream byteArrayOutputStream;
+
 
 
     @Override
@@ -162,12 +172,49 @@ public class NewProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GalleryPick && resultCode==RESULT_OK  &&  data!=null)
-        {
-            ImageUri=data.getData();
-            ProductImage.setImageURI(ImageUri);
+        if(requestCode==GalleryPick && resultCode==RESULT_OK  &&  data!=null) {
+
+            ImageUri = data.getData();
+            Toast.makeText(this, "ImageUri" + ImageUri.toString(), Toast.LENGTH_SHORT).show();
+/*
+            CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(this);
         }
-    }
+
+        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (requestCode == RESULT_OK) {
+
+*/
+                Uri resultUri = ImageUri;
+                Toast.makeText(this,"resultUri"+ resultUri.toString(), Toast.LENGTH_SHORT).show();
+
+                File thumb_filePathUri = new File(resultUri.getPath());
+
+                try {
+                    thumb_bitmap = new Compressor(this)
+                            .setMaxWidth(200)
+                            .setMaxHeight(200)
+                            .setQuality(50)
+                            .compressToBitmap(thumb_filePathUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            ProductImage.setImageURI(resultUri);
+            if(thumb_bitmap==null)
+                Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "not Null", Toast.LENGTH_SHORT).show();
+
+              //byteArrayOutputStream = new ByteArrayOutputStream();
+              //thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+              //thumb_byte = byteArrayOutputStream.toByteArray();
+            }
+        }
+
+
 
 
 
@@ -225,7 +272,7 @@ public class NewProductActivity extends AppCompatActivity {
             {
                 //new image
 
-                UplaodImage(ImageUri);
+                UplaodImage();
             }
             else
             {
@@ -240,16 +287,19 @@ public class NewProductActivity extends AppCompatActivity {
         else
         { // new product
             productRandomKey = saveCurrentDate + saveCurrentTime;
-            UplaodImage(ImageUri);
+            UplaodImage();
         }
 
 
     }
 
-    private void UplaodImage(Uri ImageUri)
+    private void UplaodImage()
     {
+       // final StorageReference filePath=ProductImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey +".jpg");
         final StorageReference filePath=ProductImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey +".jpg");
-        final UploadTask uploadTask = filePath.putFile(ImageUri);
+
+       // final UploadTask uploadTask = filePath.putFile(ImageUri);
+        final UploadTask uploadTask=filePath.putBytes(thumb_byte);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
