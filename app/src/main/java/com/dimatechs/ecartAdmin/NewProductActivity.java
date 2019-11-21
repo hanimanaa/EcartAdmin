@@ -148,7 +148,9 @@ public class NewProductActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
+                Toast.makeText(this, "image crop", Toast.LENGTH_SHORT).show();
                 ImageUri = result.getUri();
+
                 File thumb_filePathUri = new File(ImageUri.getPath());
                 try {
                     thumb_bitmap = new Compressor(this)
@@ -161,7 +163,11 @@ public class NewProductActivity extends AppCompatActivity {
                     thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
                     thumb_byte = byteArrayOutputStream.toByteArray();
 
+                    Toast.makeText(this, "image compress", Toast.LENGTH_SHORT).show();
+
                     ProductImage.setImageURI(ImageUri);
+                    Toast.makeText(this, "image ImageUri" + ImageUri.getLastPathSegment(), Toast.LENGTH_SHORT).show();
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
