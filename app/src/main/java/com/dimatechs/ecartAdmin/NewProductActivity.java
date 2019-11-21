@@ -3,11 +3,13 @@ package com.dimatechs.ecartAdmin;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -65,6 +67,9 @@ public class NewProductActivity extends AppCompatActivity {
     Bitmap thumb_bitmap=null;
     byte[] thumb_byte=null;
     ByteArrayOutputStream byteArrayOutputStream;
+
+    private File actualImage;
+    private File compressedImage;
 
 
 
@@ -172,10 +177,11 @@ public class NewProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GalleryPick && resultCode==RESULT_OK  &&  data!=null) {
+        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
+
 
             ImageUri = data.getData();
-            Toast.makeText(this, "ImageUri" + ImageUri.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "ImageUri  " + ImageUri.toString(), Toast.LENGTH_SHORT).show();
 /*
             CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
@@ -183,17 +189,24 @@ public class NewProductActivity extends AppCompatActivity {
                     .start(this);
         }
 
-        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (requestCode == RESULT_OK) {
 
 */
-                Uri resultUri = ImageUri;
-                Toast.makeText(this,"resultUri"+ resultUri.toString(), Toast.LENGTH_SHORT).show();
+                Uri resultUri =ImageUri;
 
                 File thumb_filePathUri = new File(resultUri.getPath());
 
-                try {
+
+            if (thumb_filePathUri == null)
+                Toast.makeText(this, "empty", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "not Null", Toast.LENGTH_SHORT).show();
+
+
+
+            try {
                     thumb_bitmap = new Compressor(this)
                             .setMaxWidth(200)
                             .setMaxHeight(200)
@@ -202,17 +215,16 @@ public class NewProductActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            ProductImage.setImageURI(resultUri);
-            if(thumb_bitmap==null)
-                Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this, "not Null", Toast.LENGTH_SHORT).show();
+                ProductImage.setImageURI(ImageUri);
+               // ProductImage.setImageBitmap(thumb_bitmap);
 
-              //byteArrayOutputStream = new ByteArrayOutputStream();
-              //thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-              //thumb_byte = byteArrayOutputStream.toByteArray();
+
+                byteArrayOutputStream = new ByteArrayOutputStream();
+             //   thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+             //   thumb_byte = byteArrayOutputStream.toByteArray();
             }
         }
+
 
 
 
