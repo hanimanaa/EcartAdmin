@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class NewProductActivity extends AppCompatActivity {
     private EditText EDProductName,EDProuctDescription,EdProductPrice;
     private ImageView ProductImage;
     private static final int GalleryPick=1;
-    private Uri ImageUri,oldImageUri,comImageUri;
+    private Uri ImageUri,oldImageUri;
     private String ProductName ,ProuctDescription,ProductPrice,saveCurrentDate,saveCurrentTime,category;
     private String productRandomKey,downloadImageURL;
     private StorageReference ProductImagesRef;
@@ -67,9 +68,6 @@ public class NewProductActivity extends AppCompatActivity {
     Bitmap thumb_bitmap=null;
     byte[] thumb_byte=null;
     ByteArrayOutputStream byteArrayOutputStream;
-
-    private File actualImage;
-    private File compressedImage;
 
 
 
@@ -97,7 +95,11 @@ public class NewProductActivity extends AppCompatActivity {
         ProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OpenGallery();
+
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,GalleryPick);
             }
         });
 
@@ -131,6 +133,44 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
+            ImageUri = data.getData();
+            CropImage.activity(ImageUri)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+
+                ImageUri = result.getUri();
+                File thumb_filePathUri = new File(ImageUri.getPath());
+                try {
+                    thumb_bitmap = new Compressor(this)
+                            .setMaxWidth(200)
+                            .setMaxHeight(200)
+                            .setQuality(50)
+                            .compressToBitmap(thumb_filePathUri);
+
+                    byteArrayOutputStream = new ByteArrayOutputStream();
+                    thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+                    thumb_byte = byteArrayOutputStream.toByteArray();
+
+                    ProductImage.setImageURI(ImageUri);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         if(productID!=null) {
@@ -138,6 +178,7 @@ public class NewProductActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void getProductDetails(String productID)
     {
@@ -165,70 +206,6 @@ public class NewProductActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void OpenGallery() {
-        Intent galleryIntent = new Intent();
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent,GalleryPick);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
-
-
-            ImageUri = data.getData();
-            Toast.makeText(this, "ImageUri  " + ImageUri.toString(), Toast.LENGTH_SHORT).show();
-/*
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (requestCode == RESULT_OK) {
-
-*/
-                Uri resultUri =ImageUri;
-
-                File thumb_filePathUri = new File(resultUri.getPath());
-
-
-            if (thumb_filePathUri == null)
-                Toast.makeText(this, "empty", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this, "not Null", Toast.LENGTH_SHORT).show();
-
-
-
-            try {
-                    thumb_bitmap = new Compressor(this)
-                            .setMaxWidth(200)
-                            .setMaxHeight(200)
-                            .setQuality(50)
-                            .compressToBitmap(thumb_filePathUri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ProductImage.setImageURI(ImageUri);
-               // ProductImage.setImageBitmap(thumb_bitmap);
-
-
-                byteArrayOutputStream = new ByteArrayOutputStream();
-             //   thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-             //   thumb_byte = byteArrayOutputStream.toByteArray();
-            }
-        }
-
-
-
-
-
 
     private void ValidateProductData() {
         ProductName=EDProductName.getText().toString();
@@ -284,7 +261,7 @@ public class NewProductActivity extends AppCompatActivity {
             {
                 //new image
 
-                UplaodImage();
+                UploadImage();
             }
             else
             {
@@ -299,18 +276,18 @@ public class NewProductActivity extends AppCompatActivity {
         else
         { // new product
             productRandomKey = saveCurrentDate + saveCurrentTime;
-            UplaodImage();
+            UploadImage();
         }
 
 
     }
 
-    private void UplaodImage()
+    private void UploadImage()
     {
        // final StorageReference filePath=ProductImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey +".jpg");
         final StorageReference filePath=ProductImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey +".jpg");
 
-       // final UploadTask uploadTask = filePath.putFile(ImageUri);
+      //  final UploadTask uploadTask = filePath.putFile(resultUri);
         final UploadTask uploadTask=filePath.putBytes(thumb_byte);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -393,12 +370,6 @@ public class NewProductActivity extends AppCompatActivity {
 
     }
 
-    public static byte[] compressBitmap(Bitmap bitmap ,int quality)
-    {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,quality,stream);
-        return  stream.toByteArray();
-    }
 
 
 }
