@@ -1,13 +1,14 @@
 package com.dimatechs.ecartAdmin;
 
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,6 +61,7 @@ public class AdminUserProductsActivity extends AppCompatActivity {
      * Store all  PDF models
      */
     private List<Cart> pdfModels = new ArrayList<>();
+    private Context context;
 
 
     @Override
@@ -221,9 +223,9 @@ public class AdminUserProductsActivity extends AppCompatActivity {
 
         File file = new File(filePath);
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file), "application/pdf");
+       // target.setDataAndType(Uri.fromFile(file), "application/pdf");
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
+/*
         Intent intent = Intent.createChooser(target, "המתן בבקשה");
         try
         {
@@ -233,7 +235,14 @@ public class AdminUserProductsActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "תקלה", Toast.LENGTH_SHORT).show();
         }
+*/
 
+        Uri apkURI = FileProvider.getUriForFile(
+                this,
+                getApplicationContext().getPackageName(), file);
+        target.setDataAndType(apkURI, "application/pdf");
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        this.startActivity(target);
     }
 
     @Override
