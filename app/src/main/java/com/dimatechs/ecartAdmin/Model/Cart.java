@@ -1,5 +1,10 @@
 package com.dimatechs.ecartAdmin.Model;
 
+import com.dimatechs.ecartAdmin.utils.PDFCreationUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cart
 {
     private String pid,date,time,name,price,quantity;
@@ -62,5 +67,16 @@ public class Cart
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+
+    public static List<Cart> createDummyPdfModel() {
+        PDFCreationUtils.filePath.clear();
+        PDFCreationUtils.progressCount = 1;
+
+        boolean isFirstReceivedItem = false;
+        List<Cart> pdfModels = new ArrayList<>();
+
+        return pdfModels;
     }
 }

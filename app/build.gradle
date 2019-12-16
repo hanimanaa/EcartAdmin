@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -38,6 +41,8 @@ dependencies {
 
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.0-RC3'
+
 
 
     testImplementation 'junit:junit:4.12'

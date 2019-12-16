@@ -1,50 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardElevation="15dp">
+    android:background="@color/color_white"
+    android:orientation="vertical">
 
-    <RelativeLayout
+
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
-        android:padding="10dp">
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@drawable/bg_pdf_creation"
+        android:gravity="center|left"
+        android:padding="@dimen/dp_10">
 
-        <TextView
-            android:id="@+id/cart_product_quantity"
-            android:layout_width="160dp"
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="כמות"
-            android:textColor="@android:color/white"
-            android:textSize="14dp"
-            android:layout_marginLeft="14dp"/>
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/cart_product_name"
-            android:layout_width="160dp"
+            <TextView
+                android:id="@+id/cart_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="500.00"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dp_10" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="שם מוצר"
-            android:textColor="@android:color/white"
-            android:textSize="14dp"
-            android:layout_marginLeft="5dp"
-            android:textAlignment="viewEnd"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:textStyle="bold"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/cart_product_price"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/cart_product_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="quantity"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dp_10" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="מחיר"
-            android:textColor="@android:color/white"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:gravity="left"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/cart_product_name"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical">
 
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/cart_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="name"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dp_10" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
