@@ -73,7 +73,8 @@ public class PDFCreationUtils {
      */
     private View mPDFCreationView;
     private RecyclerView mPDFCreationRV;
-    private TextView customerPhone;
+    TextView customerName;
+    TextView customerPhone;
 
     /**
      * This is child view
@@ -118,14 +119,13 @@ public class PDFCreationUtils {
      * @param totalPDFModelSize this is total pdf list size during current sub list of pdf model
      * @param currentPDFIndex   This is define to number of pdf files
      */
-    public PDFCreationUtils(AdminUserProductsActivity activity, List<Cart> currentPdfModels, int totalPDFModelSize, int currentPDFIndex) {
+    public PDFCreationUtils(AdminUserProductsActivity activity, List<Cart> currentPdfModels ,int totalPDFModelSize, int currentPDFIndex) {
         this.activity = activity;
         this.mCurrentPDFModels = currentPdfModels;
         this.mCurrentPDFIndex = currentPDFIndex;
         getWH();
         createForEveryPDFFilePath();
-        int sizeInPixel = activity.getResources().getDimensionPixelSize(R.dimen.dp_30) +
-                activity.getResources().getDimensionPixelSize(R.dimen.dp_30);
+        int sizeInPixel = activity.getResources().getDimensionPixelSize(R.dimen.dp_30) + activity.getResources().getDimensionPixelSize(R.dimen.dp_30);
 
         // Inflate parent view which contain app logo, 'MyEarnings and item row define by SECTOR'
         mPDFCreationView = LayoutInflater.from(activity).inflate(R.layout.pdf_creation_view, null, false);
@@ -135,9 +135,12 @@ public class PDFCreationUtils {
         SECTOR = deviceHeight / sizeInPixel;
         TOTAL_PROGRESS_BAR = totalPDFModelSize / SECTOR;
 
-        customerPhone=(TextView) mPDFCreationView.findViewById(R.id.customer_phone);
 
         mPDFCreationRV = (RecyclerView) mPDFCreationView.findViewById(R.id.recycler_view);
+        customerPhone =mPDFCreationView.findViewById(R.id.customerPhone);
+        customerName =mPDFCreationView.findViewById(R.id.customerName);
+
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
         mPDFCreationRV.setLayoutManager(mLayoutManager);
 
@@ -163,7 +166,7 @@ public class PDFCreationUtils {
         if (pdfModelListSize <= SECTOR) {
             NUMBER_OF_PAGE = 1;
 
-            bitmapOfView = AppUtils.findViewBitmap(mCurrentPDFModels, deviceWidth, deviceHeight, pdfRootAdapter, mPDFCreationRV, mPDFCreationView);
+            bitmapOfView = AppUtils.findViewBitmap(mCurrentPDFModels, deviceWidth, deviceHeight, pdfRootAdapter,mPDFCreationRV,customerName, customerPhone, mPDFCreationView);
             PdfBitmapCache.addBitmapToMemoryCache(NUMBER_OF_PAGE, bitmapOfView);
             createPdf();
         } else {
@@ -182,7 +185,7 @@ public class PDFCreationUtils {
             Map<Integer, List<Cart>> listMap = createFinalData();
             for (int PAGE_INDEX = 1; PAGE_INDEX <= NUMBER_OF_PAGE; PAGE_INDEX++) {
                 List<Cart> list = listMap.get(PAGE_INDEX);
-                bitmapOfView = AppUtils.findViewBitmap(list, deviceWidth, deviceHeight, pdfRootAdapter, mPDFCreationRV, mPDFCreationView);
+                bitmapOfView = AppUtils.findViewBitmap(list, deviceWidth, deviceHeight, pdfRootAdapter, mPDFCreationRV,customerName, customerPhone, mPDFCreationView);
                 PdfBitmapCache.addBitmapToMemoryCache(PAGE_INDEX, bitmapOfView);
             }
             createPdf();

@@ -25,6 +25,7 @@ public class PdfCreateAdapter extends RecyclerView.Adapter<PdfCreateAdapter.Cart
 
     @Override
     public void onBindViewHolder(CartViewHolder holder, int position) {
+
        Cart model = pdfModels.get(position);
         if (model != null) {
             // for pdf

@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,9 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
     private DatabaseReference ordersRef,usersref;
-    private String phone= "";
+    String phone="";
+
+
 
 
     @Override
@@ -105,7 +106,6 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                             public void onClick(View view)
                             {
                                 String orderNum = getRef(position).getKey();
-                                String x=getRef(position).child(phone).getKey();
                                 Intent intent = new Intent(AdminNewOrdersActivity.this,AdminUserProductsActivity.class);
                                 intent.putExtra("orderNum",orderNum);
                                 startActivity(intent);

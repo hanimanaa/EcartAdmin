@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.dimatechs.ecartAdmin.Model.Cart;
 import com.dimatechs.ecartAdmin.ViewHolder.PdfCreateAdapter;
@@ -16,15 +17,20 @@ import java.util.List;
 
 public class AppUtils {
 
+
     /**
      * Adapter set all data by model then create bitmap of this view
      *
      * @param currentPDFModels pdf list - define by per NUMBER_OF_PAGE
      * @return
      */
-    public static Bitmap findViewBitmap(final List<Cart> currentPDFModels, int deviceWidth, int deviceHeight, PdfCreateAdapter pdfRootAdapter, RecyclerView mPDFCreationRV, View mPDFCreationView) {
+    public static Bitmap findViewBitmap(final List<Cart> currentPDFModels, int deviceWidth, int deviceHeight, PdfCreateAdapter pdfRootAdapter, RecyclerView mPDFCreationRV, TextView customerName, TextView customerPhone, View mPDFCreationView) {
         pdfRootAdapter.setListData(currentPDFModels);
         mPDFCreationRV.setAdapter(pdfRootAdapter);
+
+        customerName.setText("fgsxgh");
+        customerPhone.setText("123456");
+
         return getViewBitmap(mPDFCreationView, deviceWidth, deviceHeight);
     }
 

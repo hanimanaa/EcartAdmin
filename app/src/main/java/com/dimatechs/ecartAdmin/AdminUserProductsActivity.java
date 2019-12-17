@@ -1,7 +1,6 @@
 package com.dimatechs.ecartAdmin;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -40,7 +39,9 @@ public class AdminUserProductsActivity extends AppCompatActivity {
     private DatabaseReference cartListRef;
     RecyclerView.LayoutManager layoutManager;
     private String orderNum = "";
-    public String phonex = "";
+    public String cn="";
+    public String cp ="";
+
 
 
     private boolean IS_MANY_PDF_FILE;
@@ -61,7 +62,6 @@ public class AdminUserProductsActivity extends AppCompatActivity {
      * Store all  PDF models
      */
     private List<Cart> pdfModels = new ArrayList<>();
-    private Context context;
 
 
     @Override
@@ -70,7 +70,7 @@ public class AdminUserProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_user_products);
 
         orderNum =getIntent().getStringExtra("orderNum");
-        // phone =getIntent().getStringExtra("phone");
+
 
         productsList = findViewById(R.id.products_list);
         productsList.setHasFixedSize(true);
@@ -255,7 +255,12 @@ public class AdminUserProductsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 AdminOrders order = dataSnapshot.getValue(AdminOrders.class);
-                phonex=order.getPhone();
+              //  customerName=order.getName();
+             //   phone=order.getPhone();
+                cn="Diam Manaa";
+                cp="0526666666";
+
+
 
             }
 
