@@ -24,12 +24,12 @@ public class AppUtils {
      * @param currentPDFModels pdf list - define by per NUMBER_OF_PAGE
      * @return
      */
-    public static Bitmap findViewBitmap(final List<Cart> currentPDFModels, int deviceWidth, int deviceHeight, PdfCreateAdapter pdfRootAdapter, RecyclerView mPDFCreationRV, TextView customerName, TextView customerPhone, View mPDFCreationView) {
+    public static Bitmap findViewBitmap(final List<Cart> currentPDFModels, int deviceWidth, int deviceHeight, PdfCreateAdapter pdfRootAdapter, RecyclerView mPDFCreationRV,String cn,String cp, TextView customerName, TextView customerPhone, View mPDFCreationView) {
         pdfRootAdapter.setListData(currentPDFModels);
         mPDFCreationRV.setAdapter(pdfRootAdapter);
 
-        customerName.setText("fgsxgh");
-        customerPhone.setText("123456");
+        customerName.setText(cn);
+        customerPhone.setText(cp);
 
         return getViewBitmap(mPDFCreationView, deviceWidth, deviceHeight);
     }

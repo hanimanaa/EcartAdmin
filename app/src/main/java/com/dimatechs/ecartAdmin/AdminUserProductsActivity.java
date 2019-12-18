@@ -158,7 +158,7 @@ public class AdminUserProductsActivity extends AppCompatActivity {
         List<Cart> pdfDataList = pdfModels.subList(START, END);
         PdfBitmapCache.clearMemory();
         PdfBitmapCache.initBitmapCache(getApplicationContext());
-        final PDFCreationUtils pdfCreationUtils = new PDFCreationUtils(AdminUserProductsActivity.this, pdfDataList, LIST_SIZE, NO_OF_PDF_FILE);
+        final PDFCreationUtils pdfCreationUtils = new PDFCreationUtils(AdminUserProductsActivity.this, pdfDataList,cn,cp, LIST_SIZE, NO_OF_PDF_FILE);
         if (NO_OF_PDF_FILE == 1) {
             createProgressBarForPDFCreation(PDFCreationUtils.TOTAL_PROGRESS_BAR);
         }
@@ -223,19 +223,7 @@ public class AdminUserProductsActivity extends AppCompatActivity {
 
         File file = new File(filePath);
         Intent target = new Intent(Intent.ACTION_VIEW);
-       // target.setDataAndType(Uri.fromFile(file), "application/pdf");
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-/*
-        Intent intent = Intent.createChooser(target, "המתן בבקשה");
-        try
-        {
-            startActivity(intent);
-        }
-        catch (ActivityNotFoundException e)
-        {
-            Toast.makeText(this, "תקלה", Toast.LENGTH_SHORT).show();
-        }
-*/
 
         Uri apkURI = FileProvider.getUriForFile(
                 this,
@@ -255,13 +243,8 @@ public class AdminUserProductsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 AdminOrders order = dataSnapshot.getValue(AdminOrders.class);
-              //  customerName=order.getName();
-             //   phone=order.getPhone();
-                cn="Diam Manaa";
-                cp="0526666666";
-
-
-
+                cn=order.getName();
+                cp=order.getPhone();
             }
 
             @Override

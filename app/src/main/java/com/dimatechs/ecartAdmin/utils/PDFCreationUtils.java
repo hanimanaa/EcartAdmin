@@ -73,8 +73,9 @@ public class PDFCreationUtils {
      */
     private View mPDFCreationView;
     private RecyclerView mPDFCreationRV;
-    TextView customerName;
-    TextView customerPhone;
+    private TextView customerName;
+    private TextView customerPhone;
+    private String cn,cp;
 
     /**
      * This is child view
@@ -119,10 +120,12 @@ public class PDFCreationUtils {
      * @param totalPDFModelSize this is total pdf list size during current sub list of pdf model
      * @param currentPDFIndex   This is define to number of pdf files
      */
-    public PDFCreationUtils(AdminUserProductsActivity activity, List<Cart> currentPdfModels ,int totalPDFModelSize, int currentPDFIndex) {
+    public PDFCreationUtils(AdminUserProductsActivity activity, List<Cart> currentPdfModels ,String cn,String cp,int totalPDFModelSize, int currentPDFIndex) {
         this.activity = activity;
         this.mCurrentPDFModels = currentPdfModels;
         this.mCurrentPDFIndex = currentPDFIndex;
+        this.cn=cn;
+        this.cp=cp;
         getWH();
         createForEveryPDFFilePath();
         int sizeInPixel = activity.getResources().getDimensionPixelSize(R.dimen.dp_30) + activity.getResources().getDimensionPixelSize(R.dimen.dp_30);
@@ -166,7 +169,7 @@ public class PDFCreationUtils {
         if (pdfModelListSize <= SECTOR) {
             NUMBER_OF_PAGE = 1;
 
-            bitmapOfView = AppUtils.findViewBitmap(mCurrentPDFModels, deviceWidth, deviceHeight, pdfRootAdapter,mPDFCreationRV,customerName, customerPhone, mPDFCreationView);
+            bitmapOfView = AppUtils.findViewBitmap(mCurrentPDFModels, deviceWidth, deviceHeight, pdfRootAdapter,mPDFCreationRV,cn,cp,customerName,customerPhone, mPDFCreationView);
             PdfBitmapCache.addBitmapToMemoryCache(NUMBER_OF_PAGE, bitmapOfView);
             createPdf();
         } else {
@@ -185,7 +188,7 @@ public class PDFCreationUtils {
             Map<Integer, List<Cart>> listMap = createFinalData();
             for (int PAGE_INDEX = 1; PAGE_INDEX <= NUMBER_OF_PAGE; PAGE_INDEX++) {
                 List<Cart> list = listMap.get(PAGE_INDEX);
-                bitmapOfView = AppUtils.findViewBitmap(list, deviceWidth, deviceHeight, pdfRootAdapter, mPDFCreationRV,customerName, customerPhone, mPDFCreationView);
+                bitmapOfView = AppUtils.findViewBitmap(list, deviceWidth, deviceHeight, pdfRootAdapter, mPDFCreationRV,cn,cp,customerName, customerPhone, mPDFCreationView);
                 PdfBitmapCache.addBitmapToMemoryCache(PAGE_INDEX, bitmapOfView);
             }
             createPdf();
