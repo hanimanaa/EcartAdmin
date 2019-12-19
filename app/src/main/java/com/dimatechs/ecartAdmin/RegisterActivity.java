@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dimatechs.ecartAdmin.Model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -26,11 +27,18 @@ public class RegisterActivity extends AppCompatActivity {
     private Button CreateAccountBtn;
     private EditText Etbusiness,Etfname,Etlname,Etphone,Etcity,Etpassword;
     private ProgressDialog loadingBar;
-    
+    private String CustomerPhone="";
+    private String business,fname,lname,phone,city,password;
+    private DatabaseReference CustomerRef;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        CustomerPhone=getIntent().getStringExtra("phone");
+
 
         CreateAccountBtn=(Button)findViewById(R.id.Add_btn);
         Etbusiness=(EditText)findViewById(R.id.Etbusiness);
@@ -50,17 +58,53 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(CustomerPhone!=null) {
+            getCustomerDetails(CustomerPhone);
+        }
+    }
+
+    private void getCustomerDetails(String customerPhone) {
+        CustomerRef= FirebaseDatabase.getInstance().getReference().child("Users");
+
+        CustomerRef.child(customerPhone).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.exists())
+                {
+                    Users users=dataSnapshot.getValue(Users.class);
+                    Etbusiness.setText(users.getBisiness());
+                    Etfname.setText(users.getFname());
+                    Etlname.setText(users.getLname());
+                    Etphone.setText(users.getPhone());
+                    Etcity.setText(users.getCity());
+                    Etpassword.setText(users.getPassword());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
     private void CreateAccount()
     {
-        String bisiness =Etbusiness.getText().toString();
-        String fname =Etfname.getText().toString();
-        String lname =Etlname.getText().toString();
-        String phone =Etphone.getText().toString();
-        String city =Etcity.getText().toString();
-        String password =Etpassword.getText().toString();
+        business =Etbusiness.getText().toString();
+        fname =Etfname.getText().toString();
+        lname =Etlname.getText().toString();
+        phone =Etphone.getText().toString();
+        city =Etcity.getText().toString();
+        password =Etpassword.getText().toString();
 
 
-        if(TextUtils.isEmpty(bisiness))
+        if(TextUtils.isEmpty(business))
         {
             Toast.makeText(this, "רשום שם עסק בבקשה . . .", Toast.LENGTH_SHORT).show();
         }
@@ -91,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
             
-            ValidatePhoneNumber(phone,bisiness,fname,lname,city,password);
+            ValidatePhoneNumber(phone,business,fname,lname,city,password);
         }
     }
 
@@ -104,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                if(!dataSnapshot.child("Users").child(phone).exists())
+                if(CustomerPhone!=null || !dataSnapshot.child("Users").child(phone).exists())
                 {
                     HashMap<String,Object> userdataMap = new HashMap<>();
                     userdataMap.put("bisiness",bisiness);
@@ -150,5 +194,41 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void SaveCustomerInfoToDatabase()
+    {
+        HashMap<String,Object> productMap =  new HashMap<>();
+        productMap.put("bisiness",business);
+        productMap.put("city",city);
+        productMap.put("fname",fname);
+        productMap.put("lname",lname);
+        productMap.put("phone",phone);
+        productMap.put("password",password);
+
+
+        CustomerRef.child(phone).updateChildren(productMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        if(task.isSuccessful())
+                        {
+                            Intent intent=new Intent(RegisterActivity.this,CustomersActivity.class);
+                            startActivity(intent);
+
+                            loadingBar.dismiss();
+                            Toast.makeText(RegisterActivity.this, "לקוח נוסף בהצלחה", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            loadingBar.dismiss();
+                            String message=task.getException().toString();
+                            Toast.makeText(RegisterActivity.this, "Error:"+message, Toast.LENGTH_SHORT).show();
+                            loadingBar.dismiss();
+                        }
+                    }
+                });
+
     }
 }
