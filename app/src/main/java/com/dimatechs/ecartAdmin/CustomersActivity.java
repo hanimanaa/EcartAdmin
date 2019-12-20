@@ -99,16 +99,40 @@ public class CustomersActivity extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                         if (i == 1) {
-                                            customersListRef.child(model.getPhone())
-                                                    .removeValue()
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(CustomersActivity.this);
+                                            builder.setTitle("אזהרה");
+                                            builder.setIcon(R.drawable.ic_red_forever_black_24dp);
+                                            builder.setMessage("אתה עומד למחוק לקוח !!!");
+                                            builder.setCancelable(true);
+                                            builder.setPositiveButton("אני מסכים",
+                                                    new DialogInterface.OnClickListener() {
                                                         @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                Toast.makeText(CustomersActivity.this, "לקוח הוסר בהצלחה", Toast.LENGTH_SHORT).show();
-                                                            }
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            customersListRef.child(model.getPhone())
+                                                                    .removeValue()
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Toast.makeText(CustomersActivity.this, "לקוח הוסר בהצלחה", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        }
+                                                                    });
+
                                                         }
-                                                    });
+                                                    }
+                                            );
+                                            builder.setNegativeButton("ביטול",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                        }
+                                                    }
+
+                                                    );
+                                            AlertDialog dialog=builder.create();
+                                            dialog.show();
+
                                         }
                                     }
                                 });
@@ -130,6 +154,4 @@ public class CustomersActivity extends AppCompatActivity {
 
     }
 
-
 }
-
