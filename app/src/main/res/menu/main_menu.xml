@@ -12,6 +12,11 @@
         android:orderInCategory="200"
         />
     <item
+        android:id="@+id/action_Add_Category"
+        android:title="הוספת קטגוריה חדש"
+        android:orderInCategory="210"
+        />
+    <item
         android:id="@+id/action_Orders"
         android:title="הזמנות"
         android:orderInCategory="300"

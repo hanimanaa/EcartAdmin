@@ -22,7 +22,7 @@
         android:id="@+id/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="לקוח חדש"
+        android:text="לקוחות"
         android:textStyle="italic"
         android:layout_alignParentTop="true"
         android:layout_marginTop="100dp"
@@ -138,7 +138,7 @@
         android:padding="20dp"
         android:textAllCaps="false"
         android:textSize="18sp" 
-        android:text="הוספה"
+        android:text="שמירה"
         android:textColor="@android:color/white"/>
 
 

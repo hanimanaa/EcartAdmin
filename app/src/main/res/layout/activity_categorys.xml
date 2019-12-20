@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminNewOrdersActivity">
+    tools:context=".CategorysActivity">
 
     <RelativeLayout
-        android:id="@+id/r2"
+        android:id="@+id/r3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:layout_alignParentTop="true">
 
         <TextView
-            android:id="@+id/total_price"
+            android:id="@+id/tv_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="הזמנות"
+            android:text="רשימת קטגוריות"
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textAlignment="center"
@@ -25,11 +25,12 @@
             />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/orders_list"
+        android:id="@+id/categorys_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/r2"
+        android:layout_below="@+id/r3"
         >
 
     </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

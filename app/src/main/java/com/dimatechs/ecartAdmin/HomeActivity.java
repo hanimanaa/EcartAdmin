@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dimatechs.ecartAdmin.Model.Products;
-import com.dimatechs.ecartAdmin.Prevalent.Prevalent;
 import com.dimatechs.ecartAdmin.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -34,7 +32,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -248,7 +245,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else if (id == R.id.action_Category) {
-            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            Intent intent = new Intent(getApplicationContext(),CategorysActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_Add_Category) {
+            Intent intent = new Intent(getApplicationContext(), NewCategoryActivity.class);
             startActivity(intent);
             return true;
         }

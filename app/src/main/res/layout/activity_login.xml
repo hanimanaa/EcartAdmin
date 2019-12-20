@@ -43,6 +43,7 @@
         android:layout_marginTop="6dp"
         android:hint="סיסמה"
         android:inputType="textPassword"
+        android:textDirection="rtl"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimary"
         android:textSize="17sp"

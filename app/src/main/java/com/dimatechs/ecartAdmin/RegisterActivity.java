@@ -218,7 +218,7 @@ public class RegisterActivity extends AppCompatActivity {
                             startActivity(intent);
 
                             loadingBar.dismiss();
-                            Toast.makeText(RegisterActivity.this, "לקוח נוסף בהצלחה", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "לקוח נרשם בהצלחה", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {

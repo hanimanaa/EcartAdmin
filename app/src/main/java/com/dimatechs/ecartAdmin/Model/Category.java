@@ -2,29 +2,29 @@ package com.dimatechs.ecartAdmin.Model;
 
 public class Category {
 
-    private String catid,name;
+    private String catID,catName;
 
     public Category() {
     }
 
     public Category(String catid, String name) {
-        this.catid = catid;
-        this.name = name;
+        this.catID = catid;
+        this.catName = name;
     }
 
-    public String getName() {
-        return name;
+    public String getCatID() {
+        return catID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCatID(String catID) {
+        this.catID = catID;
     }
 
-    public String getCatid() {
-        return catid;
+    public String getCatName() {
+        return catName;
     }
 
-    public void setCatid(String catid) {
-        this.catid = catid;
+    public void setCatName(String catName) {
+        this.catName = catName;
     }
 }
